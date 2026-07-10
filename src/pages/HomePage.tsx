@@ -123,7 +123,6 @@ function HomePage() {
 
       <section className="section" id="about">
         <header className="section-head">
-          <p className="section-kicker">Profile</p>
           <h2>About Me</h2>
         </header>
         <p>
@@ -169,26 +168,27 @@ function HomePage() {
 
         <h3 className="about-subtitle">Android Development</h3>
         <ul className="about-list">
-          <li>
-            Android Jetpack (ViewModel, LiveData, Data Binding, Navigation, Paging, Room,
-            Jetpack Compose), MVVM, RxJava, Coroutines, CameraX, Hilt, MotionLayout,
-            Notifications, Google AdMob, Material Design
-          </li>
+          <li>Android SDK, Android Jetpack (ViewModel, LiveData, Data Binding, Navigation, Paging Library, Room, Jetpack Compose, CameraX, Hilt, DataStore, MotionLayout, Notifications), MVVM, RxJava, Coroutines, Flow, Material Design</li>
         </ul>
 
         <h3 className="about-subtitle">Cloud & Backend</h3>
         <ul className="about-list">
-          <li>AWS, Firebase</li>
+          <li>Amazon Web Services (AWS) — Certified Solutions Architect Associate, Firebase, Firebase Cloud Functions, Google Cloud Vision API</li>
         </ul>
 
         <h3 className="about-subtitle">Testing & Quality</h3>
         <ul className="about-list">
-          <li>Unit Testing, Espresso, UI Testing</li>
+          <li>Unit Testing, Espresso, UI Testing, JUnit, A/B Testing</li>
         </ul>
 
         <h3 className="about-subtitle">CI/CD & Tooling</h3>
         <ul className="about-list">
-          <li>Git, GitHub Actions, Bitrise, CleverTap</li>
+          <li>Kotlin Multiplatform, Git, GitHub Actions, Bitrise, Android Profiler, Retrofit, Ktor, Coil, ExoPlayer, Google AdMob, CleverTap, Postman, Proxyman</li>
+        </ul>
+
+        <h3 className="about-subtitle">AI Tools</h3>
+        <ul className="about-list">
+          <li>GitHub Copilot, Claude, ChatGPT, AI Agents, Cursor</li>
         </ul>
 
         <h3 className="about-subtitle">Projects & Experiments</h3>
@@ -239,7 +239,6 @@ function HomePage() {
 
       <section className="section" id="education">
         <header className="section-head">
-          <p className="section-kicker">Foundation</p>
           <h2>Education</h2>
         </header>
         <article className="education-card">
@@ -266,23 +265,21 @@ function HomePage() {
 
       <section className="section threads-section" id="experience">
         <header className="section-head">
-          <p className="section-kicker">Career Journey</p>
-          <h2>Working Experience</h2>
-          <p className="section-subtitle">Roles and impact across Android product development.</p>
+          <h2>Work Experience</h2>
         </header>
         <div className="threads-feed">
           {experiences.map((experience, index) => (
             <article key={experience.role + experience.company} className="thread-item">
               <div className="thread-rail" aria-hidden="true">
-                <img src="/images/logo.png" alt="" className="thread-avatar" />
+                <img src="/images/me.jpg" alt="" className="thread-avatar" />
                 {index < experiences.length - 1 ? <span className="thread-line" /> : null}
               </div>
               <div className="thread-bubble">
                 <div className="thread-head">
-                  <p className="thread-author">{experience.company}</p>
+                  <p className="thread-author">{experience.role}</p>
                   <p className="thread-time">{experience.period}</p>
                 </div>
-                <h3 className="thread-role">{experience.role}</h3>
+                <h3 className="thread-role">{experience.company}</h3>
                 <ul>
                   {experience.highlights.map((highlight) => (
                     <li key={highlight}>{highlight}</li>
@@ -318,9 +315,8 @@ function HomePage() {
 
       <section className="section" id="projects">
         <header className="section-head">
-          <p className="section-kicker">Selected Work</p>
-          <h2>Side Project</h2>
-          <p className="section-subtitle">Hands-on projects focused on practical mobile engineering.</p>
+          <h2>Side Projects</h2>
+          <p className="section-subtitle">Personal Project on Google Play Store</p>
         </header>
         <div className="project-feed">
           {projects.map((project, projectIndex) => {
@@ -335,7 +331,7 @@ function HomePage() {
             <article key={project.name} className="insta-post">
               <header className="insta-head">
                 <div className="insta-profile">
-                  <img src="/images/logo.png" alt="Jeff Tan" className="insta-avatar" />
+                  <img src="/images/me.jpg" alt="Jeff Tan" className="insta-avatar" />
                   <div className="insta-profile-meta">
                     <p className="insta-handle">jeffjiahan</p>
                     <p className="insta-subline">Android Project</p>

@@ -55,14 +55,14 @@ function SiteLayout() {
       <header className="hero" id="top">
         <div className={`topbar ${isTopbarVisible ? 'is-visible' : 'is-hidden'}`}>
           <button className="brand" type="button" aria-label="Go to top" onClick={handleScrollToTop}>
-            <img src="/images/logo.png" alt="Logo" />
+            <img src="/images/me.jpg" alt="Logo" />
           </button>
           <div className="topbar-actions">
             <nav className="nav">
               <a href="#about">About</a>
               <a href="#education">Education</a>
-              <a href="#experience">Working Experience</a>
-              <a href="#projects">Side Project</a>
+              <a href="#experience">Work Experience</a>
+              <a href="#projects">Side Projects</a>
             </nav>
             <button
               className="theme-toggle"

@@ -12,7 +12,7 @@ export const projects: Project[] = [
   {
     name: 'Smart Photos (Android App)',
     summary:
-      'Published a note-taking text recognition app using Firebase ML Kit and Jetpack library',
+      'Published an Android app using Google ML Kit, Cloud Vision API, and Jetpack CameraX for real-time text recognition from photos.',
     stack: 'Android, Kotlin, Firebase',
     link: 'https://play.google.com/store/apps/details?id=com.jiahan.smartcamera',
     image: '/images/smart-photos-1.webp',

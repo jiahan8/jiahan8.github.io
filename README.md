@@ -5,7 +5,7 @@ A polished multi-page portfolio website built with React, TypeScript, Vite, and 
 ## Sections included
 - About Me
 - Projects
-- Working Experience
+- Work Experience
 - Education
 
 ## Routes
