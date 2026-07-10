@@ -1,45 +1,40 @@
-# Senior Software Engineer Portfolio
+# Jeff Tan — Portfolio
 
-A polished multi-page portfolio website built with React, TypeScript, Vite, and React Router.
+A personal portfolio website built with React, TypeScript, and Vite, deployed to GitHub Pages.
 
-## Sections included
+## Sections
+
 - About Me
-- Projects
-- Work Experience
 - Education
+- Work Experience
+- Side Projects
 
-## Routes
-- `/` Home
-- `/about`
-- `/projects`
-- `/experience`
-- `/education`
+## Local Development
 
-## Customize content
-Edit these values in `src/App.tsx`:
-- Name and intro text in the hero section
-- Project list in `projects`
-- Experience entries in `experiences`
-- Education details
+1. Install dependencies:
+   ```
+   npm install
+   ```
+2. Start the development server:
+   ```
+   npm run dev
+   ```
+3. Build for production:
+   ```
+   npm run build
+   ```
 
-## Local development
-1. Install Node.js (LTS) and npm.
-2. Install dependencies:
-   - `npm install`
-3. Run development server:
-   - `npm run dev`
-4. Build for production:
-   - `npm run build`
+## Customizing Content
 
-## Notes
-This environment did not have Node.js tooling preinstalled during setup, so dependency installation and compile checks must be run after Node.js is installed.
+Edit `src/data/portfolio.ts` to update work experience, education, and project listings.
 
-## GitHub Pages deployment
-This project is configured to deploy with GitHub Actions from the built `dist` output.
+Edit `src/pages/HomePage.tsx` to update the hero intro text, skills, and social links.
 
-1. Push changes to the `main` branch.
-2. In GitHub, go to **Settings → Pages**.
-3. Set **Source** to **GitHub Actions**.
-4. Wait for the `Deploy to GitHub Pages` workflow to finish.
+## GitHub Pages Deployment
 
-If Pages serves the repository files directly instead of `dist`, browsers may try to load `src/main.tsx` and fail with a MIME type error.
+Deployments are automated via GitHub Actions on every push to `main`.
+
+1. In GitHub, go to **Settings → Pages**.
+2. Set **Source** to **GitHub Actions**.
+3. Push to `main` — the `Deploy to GitHub Pages` workflow will build and publish automatically.
+

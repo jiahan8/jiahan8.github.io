@@ -915,9 +915,9 @@ h1 {
 
 .thread-author {
   color: var(--text-primary);
-  font-size: 0.9rem;
-  font-weight: 610;
-  letter-spacing: -0.01em;
+  font-size: 1.02rem;
+  font-weight: 650;
+  letter-spacing: -0.012em;
 }
 
 .thread-time {
@@ -928,10 +928,10 @@ h1 {
 
 .thread-role {
   margin: 0;
-  color: var(--text-secondary);
-  font-size: 0.92rem;
-  font-weight: 520;
-  letter-spacing: -0.008em;
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  font-weight: 500;
+  letter-spacing: -0.006em;
 }
 
 .thread-bubble ul {

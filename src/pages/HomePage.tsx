@@ -149,9 +149,16 @@ function HomePage() {
           infrastructure on AWS.
         </p>
         <p>
-          I also enjoy full product ownership. I’ve designed, built, and published an Android app
-          on Google Play, managing the full lifecycle from development and testing to release and
-          maintenance.
+          I also enjoy full product ownership. I've designed, built, and published an{' '}
+          <a
+            href="https://play.google.com/store/apps/details?id=com.jiahan.smartcamera"
+            target="_blank"
+            rel="noreferrer"
+            className="about-link"
+          >
+            Android app on Google Play
+          </a>
+          , managing the full lifecycle from development and testing to release and maintenance.
         </p>
 
         <h3 className="about-subtitle">Core Skills & Tools</h3>
