@@ -22,6 +22,26 @@ type SkillGroup = {
   skills: string[]
 }
 
+type Certification = {
+  name: string
+  issuer: string
+  credentialUrl: string
+  image: string
+  imageAlt?: string
+}
+
+type Profile = {
+  name: string
+  jobTitle: string
+  url: string
+  email: string
+  image: string
+  /* Curated rather than derived from skillGroups: a focused list reads better as
+     structured data than fifty entries. */
+  knowsAbout: string[]
+  links: Record<'github' | 'linkedin' | 'googlePlay' | 'credly', string>
+}
+
 type Education = {
   degree: string
   school: string
@@ -30,6 +50,74 @@ type Education = {
   imageAlt?: string
   summary: string
   courses: string[]
+}
+
+export const profile: Profile = {
+  name: 'Jeff Tan',
+  jobTitle: 'Senior Software Engineer',
+  url: 'https://jiahan8.github.io/',
+  email: 'jiahantan96@gmail.com',
+  image: '/images/me.jpg',
+  knowsAbout: [
+    'Android development',
+    'Kotlin',
+    'Jetpack Compose',
+    'Kotlin Multiplatform',
+    'Java',
+    'MVVM architecture',
+    'Amazon Web Services',
+    'Firebase',
+    'Mobile app development',
+  ],
+  links: {
+    github: 'https://github.com/jiahan8',
+    linkedin: 'https://www.linkedin.com/in/jiahant',
+    googlePlay: 'https://play.google.com/store/apps/details?id=com.jiahan.smartcamera',
+    credly: 'https://www.credly.com/users/jiahan',
+  },
+}
+
+export const certification: Certification = {
+  name: 'AWS Certified Solutions Architect – Associate',
+  issuer: 'Amazon Web Services',
+  credentialUrl: 'https://www.credly.com/badges/93650bb6-34c1-4e8f-a91f-0872e3013ff3',
+  image: '/images/aws-certified-saa.png',
+}
+
+/**
+ * schema.org Person, built from the data above so the structured data cannot drift
+ * from what the page actually renders. Injected into index.html at build time by
+ * scripts/prerender.mjs.
+ */
+export function personJsonLd() {
+  const absolute = (path: string) => new URL(path, profile.url).href
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: profile.name,
+    jobTitle: profile.jobTitle,
+    url: profile.url,
+    image: absolute(profile.image),
+    email: `mailto:${profile.email}`,
+    worksFor: {
+      '@type': 'Organization',
+      name: experiences[0].company,
+    },
+    alumniOf: {
+      '@type': 'CollegeOrUniversity',
+      name: education.school,
+    },
+    knowsAbout: profile.knowsAbout,
+    hasCredential: {
+      '@type': 'EducationalOccupationalCredential',
+      name: certification.name,
+      credentialCategory: 'certification',
+      recognizedBy: { '@type': 'Organization', name: certification.issuer },
+      url: certification.credentialUrl,
+    },
+    sameAs: Object.values(profile.links),
+  }
 }
 
 export const skillGroups: SkillGroup[] = [

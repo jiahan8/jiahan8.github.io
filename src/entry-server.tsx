@@ -1,6 +1,8 @@
 import { renderToString } from 'react-dom/server'
 import App from './App'
 
+export { personJsonLd } from './data/portfolio'
+
 /**
  * Build-time entry point. `scripts/prerender.mjs` calls this and injects the result
  * into dist/index.html so crawlers that don't execute JavaScript still see the page.

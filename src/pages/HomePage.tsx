@@ -1,5 +1,12 @@
 import { Fragment, useEffect, useRef, useState, type CSSProperties, type UIEvent } from 'react'
-import { education, experiences, projects, skillGroups } from '../data/portfolio'
+import {
+  certification,
+  education,
+  experiences,
+  profile,
+  projects,
+  skillGroups,
+} from '../data/portfolio'
 
 function HomePage() {
   const [carouselIndexByProject, setCarouselIndexByProject] = useState<Record<string, number>>({})
@@ -117,7 +124,7 @@ function HomePage() {
         >
             <a
               className="social-link"
-              href="https://github.com/jiahan8"
+              href={profile.links.github}
               target="_blank"
               rel="noreferrer"
               aria-label="GitHub"
@@ -129,7 +136,7 @@ function HomePage() {
             </a>
             <a
               className="social-link"
-              href="https://www.linkedin.com/in/jiahant"
+              href={profile.links.linkedin}
               target="_blank"
               rel="noreferrer"
               aria-label="LinkedIn"
@@ -141,7 +148,7 @@ function HomePage() {
             </a>
             <a
               className="social-link"
-              href="https://play.google.com/store/apps/details?id=com.jiahan.smartcamera"
+              href={profile.links.googlePlay}
               target="_blank"
               rel="noreferrer"
               aria-label="Google Play"
@@ -185,7 +192,7 @@ function HomePage() {
         </p>
         <p>
           Beyond mobile development, I’m an <a
-            href="https://www.credly.com/badges/93650bb6-34c1-4e8f-a91f-0872e3013ff3"
+            href={certification.credentialUrl}
             target="_blank"
             rel="noreferrer"
             className="ai-gradient-text ai-shimmer-text ai-shimmer-delayed"
@@ -199,7 +206,7 @@ function HomePage() {
         <p>
           I also enjoy full product ownership. I've designed, built, and published an{' '}
           <a
-            href="https://play.google.com/store/apps/details?id=com.jiahan.smartcamera"
+            href={profile.links.googlePlay}
             target="_blank"
             rel="noreferrer"
             className="about-link"
@@ -225,13 +232,13 @@ function HomePage() {
         <h3 className="about-subtitle">Projects & Experiments</h3>
         <ul className="about-list">
           <li>
-            <a href="https://www.credly.com/users/jiahan" target="_blank" rel="noreferrer" className="about-link">
+            <a href={profile.links.credly} target="_blank" rel="noreferrer" className="about-link">
               Credly Profile
             </a>
           </li>
           <li>
             <a
-              href="https://play.google.com/store/apps/details?id=com.jiahan.smartcamera"
+              href={profile.links.googlePlay}
               target="_blank"
               rel="noreferrer"
               className="about-link"
@@ -240,31 +247,36 @@ function HomePage() {
             </a>
           </li>
           <li>
-            <a href="https://github.com/jiahan8" target="_blank" rel="noreferrer" className="about-link">
+            <a href={profile.links.github} target="_blank" rel="noreferrer" className="about-link">
               GitHub
             </a>
           </li>
           <li>
-            <a href="https://jiahan8.github.io" target="_blank" rel="noreferrer" className="about-link">
+            <a href={profile.url} target="_blank" rel="noreferrer" className="about-link">
               Portfolio Website
             </a>
           </li>
         </ul>
         <p className="contact-line">
           Contact —{' '}
-          <a href="mailto:jiahantan96@gmail.com" className="about-link">
-            jiahantan96@gmail.com
+          <a href={`mailto:${profile.email}`} className="about-link">
+            {profile.email}
           </a>
         </p>
         <div className="cert-item">
           <h4>
             <span className="cert-icon" aria-hidden="true">
-              <img src="/images/aws-certified-saa.png" alt="" loading="lazy" decoding="async" />
+              <img
+                src={certification.image}
+                alt={certification.imageAlt ?? ''}
+                loading="lazy"
+                decoding="async"
+              />
             </span>
-            AWS Certified Solutions Architect – Associate
+            {certification.name}
           </h4>
           <a
-            href="https://www.credly.com/badges/93650bb6-34c1-4e8f-a91f-0872e3013ff3"
+            href={certification.credentialUrl}
             target="_blank"
             rel="noreferrer"
           >
