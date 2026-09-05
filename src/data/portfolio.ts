@@ -5,6 +5,8 @@ type Project = {
   link?: string
   image?: string
   images?: string[]
+  /* Parallel to `images` — names the feature each screenshot shows. */
+  imageCaptions?: string[]
   imageAlt?: string
 }
 
@@ -13,6 +15,11 @@ type Experience = {
   company: string
   period: string
   highlights: string[]
+}
+
+type SkillGroup = {
+  title: string
+  skills: string[]
 }
 
 type Education = {
@@ -25,6 +32,72 @@ type Education = {
   courses: string[]
 }
 
+export const skillGroups: SkillGroup[] = [
+  {
+    title: 'Languages',
+    skills: ['Kotlin', 'Java'],
+  },
+  {
+    title: 'Android Core',
+    skills: [
+      'Android SDK',
+      'ViewModel',
+      'LiveData',
+      'Data Binding',
+      'Navigation',
+      'Paging Library',
+      'Room',
+      'Jetpack Compose',
+      'CameraX',
+      'Hilt',
+      'DataStore',
+      'MotionLayout',
+      'Notifications',
+      'MVVM',
+      'RxJava',
+      'Coroutines',
+      'Flow',
+      'Material Design 3',
+      'Kotlin Multiplatform (KMP)',
+    ],
+  },
+  {
+    title: 'Cloud & Backend',
+    skills: [
+      'Amazon Web Services (AWS)',
+      'Firebase',
+      'Firebase Cloud Functions',
+      'Google Cloud',
+      'Google Cloud Vision API',
+    ],
+  },
+  {
+    title: 'Testing & Quality',
+    skills: ['JUnit', 'Robolectric', 'MockK', 'Espresso', 'A/B Testing'],
+  },
+  {
+    title: 'CI/CD & Tooling',
+    skills: [
+      'Git',
+      'GitHub Actions',
+      'Bitrise',
+      'Android Profiler',
+      'Retrofit',
+      'Ktor',
+      'Coil',
+      'ExoPlayer',
+      'Google AdMob',
+      'CleverTap',
+      'Postman',
+      'Proxyman',
+    ],
+  },
+  {
+    title: 'AI Tools',
+    skills: ['Claude Code', 'GitHub Copilot', 'ChatGPT', 'AI Agents', 'Model Context Protocol (MCP)'],
+  },
+]
+
 export const projects: Project[] = [
   {
     name: 'Smart Photos (Android App)',
@@ -32,15 +105,26 @@ export const projects: Project[] = [
       'Published an Android app using Google ML Kit, Cloud Vision API, and Jetpack CameraX for real-time text recognition from photos.',
     stack: 'Android, Kotlin, Firebase',
     link: 'https://play.google.com/store/apps/details?id=com.jiahan.smartcamera',
-    image: '/images/smart-photos-1.webp',
+    image: '/images/1_homepage.webp',
     images: [
-      '/images/smart-photos-1.webp',
-      '/images/smart-photos-2.webp',
-      '/images/smart-photos-3.webp',
-      '/images/smart-photos-4.webp',
-      '/images/smart-photos-5.webp',
-      '/images/smart-photos-6.webp',
-      '/images/smart-photos-7.webp',
+      '/images/1_homepage.webp',
+      '/images/2_bottomsheet.webp',
+      '/images/3_note.webp',
+      '/images/4_search.webp',
+      '/images/5_favorite.webp',
+      '/images/6_editnote.webp',
+      '/images/7_share.webp',
+      '/images/8_multilanguage.webp',
+    ],
+    imageCaptions: [
+      'Home feed',
+      'Capture sheet',
+      'Note detail',
+      'Search',
+      'Favourites',
+      'Note editing',
+      'Sharing',
+      'Multi-language',
     ],
     imageAlt: 'Smart Photos app preview from Google Play',
   }
@@ -52,9 +136,11 @@ export const experiences: Experience[] = [
     company: 'Electrolux Home Appliances Sdn. Bhd.',
     period: 'March 2024 – Present',
     highlights: [
-      'Own the entire app development lifecycle, including conceptualization, design, development, testing, deployment, and maintenance, successfully managing 35 app releases and serving approximately 700K monthly active users.',
-      'Develop a large-scale IoT application with 20+ modules, leveraging Jetpack Compose and Kotlin Multiplatform.',
-      'Improve overall application performance by ~10% through optimized data structures, efficient algorithms, and strategic caching.',
+      'Managed the full app development lifecycle in an agile environment — from conceptualization through deployment and maintenance — successfully shipping 35 releases to ~700K monthly active users.',
+      'Architected core modules of a 20+ module IoT application using Jetpack Compose and Kotlin Multiplatform, sharing 80% of business logic across platforms to reduce duplicate engineering effort.',
+      'Improved app accessibility across 10+ screens by implementing semantics and enhancing the TalkBack user experience.',
+      'Leveraged Claude Code, GitHub Copilot and the Figma MCP Server to accelerate the development and code review process for the geofencing feature.',
+      'Presented newly built features in biweekly company-wide engineering sharing sessions over 2+ years, fielding technical questions from developers across teams.',
     ],
   },
   {
@@ -62,11 +148,11 @@ export const experiences: Experience[] = [
     company: 'Fave Asia Sdn. Bhd',
     period: 'March 2021 – March 2024',
     highlights: [
-      'Built key features (Search, Nearby, Arcade) by utilizing over 10 Firebase Remote Configs to dynamically control the app experience and conducted approximately 5 A/B tests, resulting in a significant 32% increase in the conversion rate.',
-      'Successfully implemented Google AdMob/Ads on the homepage, boosting revenue by S$800.',
-      'Deployed 15 deep links for precise in-app navigation, leading to a 24% increase in user engagement.',
-      'Refactored the codebase to leverage Kotlin and Hilt, reducing the app size by 13% (from 72 MB to 63 MB).',
-      'Incorporated CleverTap event trackers and unit tests to enhance stability, resulting in over 99.6% crash-free users.',
+      'Built key features (Search, Nearby, Arcade) using 10+ Firebase Remote Configs for dynamic app control; ran ~5 A/B tests that drove a 32% increase in conversion rate.',
+      'Integrated Google AdMob on the homepage, generating an additional S$800 in monthly revenue.',
+      'Deployed 15 deep links for precise in-app navigation, increasing user engagement by 24%.',
+      'Refactored codebase from Java to Kotlin with Hilt dependency injection, reducing app size by 13% (72 MB → 63 MB).',
+      'Expanded unit and instrumented test coverage, achieving 99.6%+ crash-free user sessions; implemented CleverTap for event tracking and analytics.',
     ],
   },
   {
@@ -74,9 +160,9 @@ export const experiences: Experience[] = [
     company: 'Freelance',
     period: 'September 2019 – December 2020',
     highlights: [
-      'Maximized app performance with Android Profiler, Layout Inspector, and overdraw reduction.',
-      'Utilized Retrofit for network calls and Room local database for data searching and offline capabilities.',
-      'Designed background execution functions for long-running tasks using Coroutines and RxJava.',
+      'Diagnosed and resolved UI performance bottlenecks using Android Profiler, Layout Inspector, and overdraw analysis.',
+      'Built robust networking and REST API integration layers with Retrofit and offline-capable data persistence with Room local database.',
+      'Designed background execution pipelines for long-running tasks using Coroutines and RxJava.',
     ],
   },
   {
@@ -84,9 +170,9 @@ export const experiences: Experience[] = [
     company: 'Advisory Apps Sdn. Bhd.',
     period: 'February 2019 – August 2019',
     highlights: [
-      'Developed a messaging system that served 500+ MAU using LiveData and MVVM to update and display data in real-time.',
-      'Interacted with Firebase, SQLite databases, and local storage for data saving functionality and offline capabilities.',
-      'Integrated Google Maps API, Foursquare API, and GPS to provide an accurate location-sharing feature.',
+      'Developed a real-time messaging system serving 500+ MAU using LiveData and MVVM architecture.',
+      'Integrated Firebase and SQLite for data persistence and offline access.',
+      'Implemented a location-sharing feature combining Google Maps API, Foursquare API, and GPS for accurate real-time positioning.',
     ],
   },
   {
@@ -94,8 +180,8 @@ export const experiences: Experience[] = [
     company: 'Iowa State University',
     period: 'August 2018 – December 2018',
     highlights: [
-      'Developed JUnit test cases to serve as a grading rubric for weekly programming assignments for 350+ students.',
-      'Led weekly recitation sessions of 30+ students, graded exams, and helped students consider tradeoffs between different solutions and become more independent in debugging their code.',
+      'Wrote JUnit test suites used as grading rubrics for weekly programming assignments across 350+ students.',
+      'Led weekly recitation sessions of 30+ students; graded exams and coached students on debugging and algorithm tradeoffs.',
     ],
   },
   {
@@ -103,8 +189,8 @@ export const experiences: Experience[] = [
     company: 'Iowa State University',
     period: 'June 2017 – December 2017',
     highlights: [
-      'Assisted customers with software and hardware issues across a range of devices in person, via phone, and email.',
-      'Collaborated on a team of 5 to maintain and troubleshoot computer systems, LAN/WAN, and TCP/IP networks.',
+      'Resolved software and hardware issues for customers in person, by phone, and via email.',
+      'Collaborated within a 5-person team to maintain and troubleshoot computer systems and LAN/WAN/TCP-IP networks.',
     ],
   },
 ]

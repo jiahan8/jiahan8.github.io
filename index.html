@@ -9,7 +9,7 @@
     />
     <meta name="robots" content="index, follow" />
     <meta name="author" content="Jeff Tan" />
-    <meta name="theme-color" content="#0b0f17" />
+    <meta name="theme-color" content="#07090f" />
     <link rel="canonical" href="https://jiahan8.github.io/" />
 
     <meta property="og:type" content="website" />
@@ -20,7 +20,14 @@
     />
     <meta property="og:url" content="https://jiahan8.github.io/" />
     <meta property="og:site_name" content="Jeff Tan Portfolio" />
-    <meta property="og:image" content="https://jiahan8.github.io/images/logo.png" />
+    <meta property="og:image" content="https://jiahan8.github.io/images/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="Jeff Tan — Senior Android Software Engineer. Kotlin, Jetpack Compose, Kotlin Multiplatform, AWS."
+    />
+    <meta property="og:locale" content="en_US" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Jeff Tan | Senior Software Engineer" />
@@ -28,10 +35,31 @@
       name="twitter:description"
       content="Senior software engineer focused on Android, Kotlin, and scalable mobile app development."
     />
-    <meta name="twitter:image" content="https://jiahan8.github.io/images/logo.png" />
+    <meta name="twitter:image" content="https://jiahan8.github.io/images/og-image.jpg" />
+    <meta
+      name="twitter:image:alt"
+      content="Jeff Tan — Senior Android Software Engineer. Kotlin, Jetpack Compose, Kotlin Multiplatform, AWS."
+    />
 
-    <link rel="icon" type="image/png" href="/images/logo.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon-180.png" />
     <title>Jeff Tan | Senior Software Engineer Portfolio</title>
+
+    <!-- Applies the stored theme before first paint, so the page never flashes the
+         wrong palette and the prerendered markup hydrates without a mismatch. -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem('portfolio-theme')
+          if (t !== 'dark' && t !== 'light') {
+            t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+          }
+          document.documentElement.setAttribute('data-theme', t)
+        } catch (e) {
+          document.documentElement.setAttribute('data-theme', 'dark')
+        }
+      })()
+    </script>
 
     <script type="application/ld+json">
       {
@@ -40,7 +68,34 @@
         "name": "Jeff Tan",
         "jobTitle": "Senior Software Engineer",
         "url": "https://jiahan8.github.io/",
-        "image": "https://jiahan8.github.io/images/logo.png",
+        "image": "https://jiahan8.github.io/images/me.jpg",
+        "email": "mailto:jiahantan96@gmail.com",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Electrolux Home Appliances Sdn. Bhd."
+        },
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "Iowa State University"
+        },
+        "knowsAbout": [
+          "Android development",
+          "Kotlin",
+          "Jetpack Compose",
+          "Kotlin Multiplatform",
+          "Java",
+          "MVVM architecture",
+          "Amazon Web Services",
+          "Firebase",
+          "Mobile app development"
+        ],
+        "hasCredential": {
+          "@type": "EducationalOccupationalCredential",
+          "name": "AWS Certified Solutions Architect \u2013 Associate",
+          "credentialCategory": "certification",
+          "recognizedBy": { "@type": "Organization", "name": "Amazon Web Services" },
+          "url": "https://www.credly.com/badges/93650bb6-34c1-4e8f-a91f-0872e3013ff3"
+        },
         "sameAs": [
           "https://github.com/jiahan8",
           "https://www.linkedin.com/in/jiahant",
@@ -51,6 +106,16 @@
     </script>
   </head>
   <body>
+    <!-- The prerendered markup starts at opacity:0 for the scroll-reveal animation.
+         Without JS the observer never runs, so un-hide it for no-script visitors. -->
+    <noscript>
+      <style>
+        .reveal {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      </style>
+    </noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

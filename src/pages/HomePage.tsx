@@ -1,8 +1,18 @@
-import { useState, type UIEvent } from 'react'
-import { education, experiences, projects } from '../data/portfolio'
+import { Fragment, useEffect, useRef, useState, type CSSProperties, type UIEvent } from 'react'
+import { education, experiences, projects, skillGroups } from '../data/portfolio'
 
 function HomePage() {
   const [carouselIndexByProject, setCarouselIndexByProject] = useState<Record<string, number>>({})
+
+  // Tracks a button-driven smooth scroll that is still animating, per project.
+  const pendingScrollRef = useRef<Record<string, { target: number; timer: number }>>({})
+
+  useEffect(
+    () => () => {
+      Object.values(pendingScrollRef.current).forEach(({ timer }) => window.clearTimeout(timer))
+    },
+    [],
+  )
 
   const handleCarouselScroll = (projectName: string, event: UIEvent<HTMLDivElement>) => {
     const { scrollLeft, clientWidth } = event.currentTarget
@@ -11,6 +21,20 @@ function HomePage() {
     }
 
     const index = Math.round(scrollLeft / clientWidth)
+    const pending = pendingScrollRef.current[projectName]
+
+    if (pending) {
+      // Mid-animation the scroll position still rounds to the *previous* slide, which
+      // would knock the counter, chip and dots back and forth. Ignore those frames and
+      // only accept the position once the animation lands on the slide we asked for.
+      if (index !== pending.target) {
+        return
+      }
+
+      window.clearTimeout(pending.timer)
+      delete pendingScrollRef.current[projectName]
+    }
+
     setCarouselIndexByProject((prev) => {
       if (prev[projectName] === index) {
         return prev
@@ -39,8 +63,29 @@ function HomePage() {
       return
     }
 
-    const currentIndex = carouselIndexByProject[projectName] ?? Math.round(carousel.scrollLeft / slideWidth)
+    const pending = pendingScrollRef.current[projectName]
+    // Step from the slide we're heading to, so rapid clicks chain (0 -> 1 -> 2) instead
+    // of both resolving against the same stale index.
+    const currentIndex =
+      pending?.target ?? carouselIndexByProject[projectName] ?? Math.round(carousel.scrollLeft / slideWidth)
     const nextIndex = Math.min(imageCount - 1, Math.max(0, currentIndex + direction))
+
+    if (nextIndex === currentIndex) {
+      return
+    }
+
+    if (pending) {
+      window.clearTimeout(pending.timer)
+    }
+
+    // If the animation is interrupted (a swipe part-way through) the target may never be
+    // reached, so stop suppressing scroll updates after it would normally have settled.
+    pendingScrollRef.current[projectName] = {
+      target: nextIndex,
+      timer: window.setTimeout(() => {
+        delete pendingScrollRef.current[projectName]
+      }, 900),
+    }
 
     carousel.scrollTo({
       left: nextIndex * slideWidth,
@@ -56,17 +101,20 @@ function HomePage() {
   return (
     <>
       <section className="hero-content sectionless">
-        <h1>Jeff Tan</h1>
-        <p className="intro">
+        <h1 className="reveal">Jeff Tan</h1>
+        <p className="intro reveal" style={{ '--reveal-delay': '80ms' } as CSSProperties}>
           I’m a <span className="ai-gradient-text ai-shimmer-text" data-text="senior software engineer">senior software engineer</span> specializing in Android development, with extensive experience building scalable, high-performance mobile applications from concept to production. I focus on clean architecture, maintainable codebases, and user-centric design, and I enjoy solving complex real-world problems in production environments.
         </p>
-        <div className="hero-badges">
+        <div className="hero-badges reveal" style={{ '--reveal-delay': '160ms' } as CSSProperties}>
           <span className="pill">Senior Android Software Engineer</span>
           <span className="pill">AWS Certified Solutions Architect</span>
           <span className="pill">Kotlin Multiplatform Mobile App Developer</span>
         </div>
-        <div className="hero-actions">
-          <div className="hero-social" aria-label="Social links">
+        <div
+          className="hero-social reveal"
+          aria-label="Social links"
+          style={{ '--reveal-delay': '240ms' } as CSSProperties}
+        >
             <a
               className="social-link"
               href="https://github.com/jiahan8"
@@ -102,10 +150,9 @@ function HomePage() {
               <svg viewBox="0 0 24 24" aria-hidden="true">
                 <path d="M4.3 3.1c-.3.3-.5.8-.5 1.5v14.8c0 .7.2 1.2.5 1.5l.1.1 8.3-8.3V12L4.4 3l-.1.1Zm11.1 5.5-2.7 2.7v1.4l2.7 2.7.1-.1 3.2-1.8c.9-.5.9-1.4 0-1.9l-3.2-1.8-.1.1ZM15 16.1l-2.8-2.8-8.2 8.2c.4.4 1 .4 1.8 0l9.2-5.2Zm-9.2-14c-.8-.4-1.4-.4-1.8 0l8.2 8.2L15 7.5 5.8 2.1Z" />
               </svg>
-            </a>
-          </div>
+          </a>
         </div>
-        <div className="hero-metrics">
+        <div className="hero-metrics reveal" style={{ '--reveal-delay': '320ms' } as CSSProperties}>
           <p>
             <strong>8+ Years</strong>
             <span>Mobile App Development</span>
@@ -121,8 +168,9 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="section" id="about">
+      <section className="section reveal" id="about">
         <header className="section-head">
+          <p className="section-kicker">01 — Profile</p>
           <h2>About Me</h2>
         </header>
         <p>
@@ -161,42 +209,18 @@ function HomePage() {
           , managing the full lifecycle from development and testing to release and maintenance.
         </p>
 
-        <h3 className="about-subtitle">Core Skills & Tools</h3>
-        <ul className="about-list">
-          <li>
-            <span
-              className="ai-shimmer-text"
-              data-text="Kotlin, Java, Android Development, Cloud Computing, Amazon Web Services (AWS), Firebase, Kotlin Multiplatform"
-            >
-              Kotlin, Java, Android Development, Cloud Computing, Amazon Web Services (AWS), Firebase, Kotlin Multiplatform
-            </span>
-          </li>
-        </ul>
-
-        <h3 className="about-subtitle">Android Development</h3>
-        <ul className="about-list">
-          <li>Android SDK, Android Jetpack (ViewModel, LiveData, Data Binding, Navigation, Paging Library, Room, Jetpack Compose, CameraX, Hilt, DataStore, MotionLayout, Notifications), MVVM, RxJava, Coroutines, Flow, Material Design</li>
-        </ul>
-
-        <h3 className="about-subtitle">Cloud & Backend</h3>
-        <ul className="about-list">
-          <li>Amazon Web Services (AWS) — Certified Solutions Architect Associate, Firebase, Firebase Cloud Functions, Google Cloud Vision API</li>
-        </ul>
-
-        <h3 className="about-subtitle">Testing & Quality</h3>
-        <ul className="about-list">
-          <li>Unit Testing, Espresso, UI Testing, JUnit, A/B Testing</li>
-        </ul>
-
-        <h3 className="about-subtitle">CI/CD & Tooling</h3>
-        <ul className="about-list">
-          <li>Kotlin Multiplatform, Git, GitHub Actions, Bitrise, Android Profiler, Retrofit, Ktor, Coil, ExoPlayer, Google AdMob, CleverTap, Postman, Proxyman</li>
-        </ul>
-
-        <h3 className="about-subtitle">AI Tools</h3>
-        <ul className="about-list">
-          <li>GitHub Copilot, Claude, ChatGPT, AI Agents, Cursor</li>
-        </ul>
+        {skillGroups.map((group) => (
+          <Fragment key={group.title}>
+            <h3 className="about-subtitle">{group.title}</h3>
+            <div className="tech-stack skill-pills">
+              {group.skills.map((skill) => (
+                <span key={skill} className="tech-pill">
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </Fragment>
+        ))}
 
         <h3 className="about-subtitle">Projects & Experiments</h3>
         <ul className="about-list">
@@ -226,11 +250,16 @@ function HomePage() {
             </a>
           </li>
         </ul>
-        <p>Contact: jiahantan96@gmail.com</p>
+        <p className="contact-line">
+          Contact —{' '}
+          <a href="mailto:jiahantan96@gmail.com" className="about-link">
+            jiahantan96@gmail.com
+          </a>
+        </p>
         <div className="cert-item">
           <h4>
             <span className="cert-icon" aria-hidden="true">
-              <img src="/images/aws-certified-saa.png" alt="" />
+              <img src="/images/aws-certified-saa.png" alt="" loading="lazy" decoding="async" />
             </span>
             AWS Certified Solutions Architect – Associate
           </h4>
@@ -244,15 +273,22 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="section" id="education">
+      <section className="section reveal" id="education">
         <header className="section-head">
+          <p className="section-kicker">02 — Background</p>
           <h2>Education</h2>
         </header>
         <article className="education-card">
           <h3>{education.degree}</h3>
           <div className="education-meta-row">
             {education.image ? (
-              <img src={education.image} alt={education.imageAlt ?? education.school} className="school-logo-inline" />
+              <img
+                src={education.image}
+                alt={education.imageAlt ?? education.school}
+                className="school-logo-inline"
+                loading="lazy"
+                decoding="async"
+              />
             ) : null}
             <p className="meta">
               {education.school} · {education.period}
@@ -270,15 +306,21 @@ function HomePage() {
         </article>
       </section>
 
-      <section className="section threads-section" id="experience">
+      <section className="section threads-section reveal" id="experience">
         <header className="section-head">
+          <p className="section-kicker">03 — Track record</p>
           <h2>Work Experience</h2>
+          <p className="section-subtitle">Eight years shipping Android at production scale.</p>
         </header>
         <div className="threads-feed">
           {experiences.map((experience, index) => (
-            <article key={experience.role + experience.company} className="thread-item">
+            <article
+              key={experience.role + experience.company}
+              className="thread-item reveal"
+              style={{ '--reveal-delay': `${Math.min(index, 4) * 70}ms` } as CSSProperties}
+            >
               <div className="thread-rail" aria-hidden="true">
-                <img src="/images/me.jpg" alt="" className="thread-avatar" />
+                <img src="/images/me.jpg" alt="" className="thread-avatar" loading="lazy" decoding="async" />
                 {index < experiences.length - 1 ? <span className="thread-line" /> : null}
               </div>
               <div className="thread-bubble">
@@ -320,10 +362,11 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="section" id="projects">
+      <section className="section reveal" id="projects">
         <header className="section-head">
+          <p className="section-kicker">04 — Off the clock</p>
           <h2>Side Projects</h2>
-          <p className="section-subtitle">Personal Project on Google Play Store</p>
+          <p className="section-subtitle">Personal work shipped to the Google Play Store.</p>
         </header>
         <div className="project-feed">
           {projects.map((project, projectIndex) => {
@@ -333,12 +376,13 @@ function HomePage() {
               Math.max(imageList.length - 1, 0),
             )
             const carouselId = `insta-carousel-${projectIndex}`
+            const slideLabel = project.imageCaptions?.[activeSlide]
 
             return (
             <article key={project.name} className="insta-post">
               <header className="insta-head">
                 <div className="insta-profile">
-                  <img src="/images/me.jpg" alt="Jeff Tan" className="insta-avatar" />
+                  <img src="/images/me.jpg" alt="Jeff Tan" className="insta-avatar" loading="lazy" decoding="async" />
                   <div className="insta-profile-meta">
                     <p className="insta-handle">jeffjiahan</p>
                     <p className="insta-subline">Android Project</p>
@@ -365,7 +409,11 @@ function HomePage() {
                       >
                         <img
                           src={image}
-                          alt={`${project.imageAlt ?? project.name} ${index + 1}`}
+                          alt={
+                            project.imageCaptions?.[index]
+                              ? `${project.name} — ${project.imageCaptions[index]}`
+                              : `${project.imageAlt ?? project.name} ${index + 1}`
+                          }
                           className="insta-media"
                           loading={index === 0 ? 'eager' : 'lazy'}
                         />
@@ -445,6 +493,14 @@ function HomePage() {
                 <p>
                   <strong>{project.name}</strong> {project.summary}
                 </p>
+                {slideLabel ? (
+                  <p className="insta-slide-label" key={slideLabel}>
+                    <span className="insta-slide-index">
+                      {String(activeSlide + 1).padStart(2, '0')}
+                    </span>
+                    {slideLabel}
+                  </p>
+                ) : null}
               </div>
 
               <div className="tech-stack insta-tags">
